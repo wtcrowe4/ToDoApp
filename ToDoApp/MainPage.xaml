@@ -25,14 +25,68 @@
                 FontSize="20" 
                 HorizontalOptions="Center" />
             
-            <!-- Get lists from ItemsSource -->
-            <ListView>
-                
-                
-            </ListView>
-            
-            
-            
+            <!-- Filler data for lists  -->
+            <!--<CollectionView>
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type model:List}">
+                        <model:List
+                            Title="List 1"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                        <model:List
+                            Title="List 2"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                        <model:List
+                            Title="List 3"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                        <model:List
+                            Title="List 4"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                    </x:Array>
+                </CollectionView.ItemsSource>
+                <CollectionView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    Source="{Binding Icon}"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    HeightRequest="50"
+                                    WidthRequest="50" />
+                                <Label
+                                    Text="{Binding Title}"
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    FontSize="20" />
+                                <Label
+                                    Text="{Binding Description}"
+                                    Grid.Column="1"
+                                    Grid.Row="1" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>-->
+
+
+
 
             <!-- Button to Add New List Navigates to Form Page-->
             <Button 

@@ -1,15 +1,14 @@
-﻿namespace ToDoApp;
+﻿
+
+namespace ToDoApp;
 
 public partial class MainPage : ContentPage
 {
 	public MainPage()
 	{
 		InitializeComponent();
-	}
+    }
 
-	//Filler data for lists array
-	public List<string> Data { get; set; }
-	= new List<string> { "List 1", "List 2", "List 3" };
 	
 
 
