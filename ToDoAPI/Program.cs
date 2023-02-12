@@ -12,13 +12,14 @@ var app = builder.Build();
 
 //app.UseHttpsRedirection();
 
+//GET all Lists
 app.MapGet("api/todo", async (AppDbContext db) =>
 {
     var todoLists = await db.ToDoLists.ToListAsync();
     return Results.Ok(todoLists);
 });
 
-//POST Lists to database
+//POST Create List
 app.MapPost("api/todo", async (AppDbContext db, ToDoList todoList) =>
 {
     await db.ToDoLists.AddAsync(todoList);
@@ -26,6 +27,7 @@ app.MapPost("api/todo", async (AppDbContext db, ToDoList todoList) =>
     return Results.Created($"/api/todo/{todoList.Id}", todoList);
 });
 
+//PUT Edit List
 app.MapPut("api/todo{id}", async (AppDbContext db, int Id, ToDoList todoList) =>
     {
         var toDoListModel = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
@@ -42,17 +44,36 @@ app.MapPut("api/todo{id}", async (AppDbContext db, int Id, ToDoList todoList) =>
 
     });
 
+//DELETE Delete List
 app.MapDelete("api/todo/{Id}", async (AppDbContext db, int Id) =>
-{
-    var toDoListModel = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
-    if (toDoListModel == null)
     {
-        return Results.NotFound();
-    }
-    db.ToDoLists.Remove(toDoListModel);
-    await db.SaveChangesAsync();
-    return Results.Ok(toDoListModel);
-});
+        var toDoListModel = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
+        if (toDoListModel == null)
+        {
+            return Results.NotFound();
+        }
+        db.ToDoLists.Remove(toDoListModel);
+        await db.SaveChangesAsync();
+        return Results.Ok(toDoListModel);
+    });
+
+//GET Specific List
+app.MapGet("api/todo/{Id}", async (AppDbContext db, int Id) =>
+    {
+        var toDoList = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
+        return Results.Ok(toDoList);
+    });
+
+//POST Add Item to Specific List
+//app.MapPost("api/todo/{Id", async (AppDbContext db, int Id, Items Item) =>
+//{
+//    var toDoList = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
+//    //Call method to add item
+//    await db.ToDoLists.Items.AddAsync(Item);
+//    await db.SaveChangesAsync();
+//    return Results.Ok(toDoList);
+
+//});
 
 
 
