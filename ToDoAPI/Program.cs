@@ -1,3 +1,4 @@
+
 using Microsoft.EntityFrameworkCore;
 using ToDoAPI.Data;
 using ToDoAPI.Models;
@@ -18,7 +19,7 @@ app.MapGet("api/todo", async (AppDbContext db) =>
 });
 
 //POST Lists to database
-app.MapPost("api/todo", async(AppDbContext db, ToDoList todoList) =>
+app.MapPost("api/todo", async (AppDbContext db, ToDoList todoList) =>
 {
     await db.ToDoLists.AddAsync(todoList);
     await db.SaveChangesAsync();
@@ -56,13 +57,6 @@ app.MapDelete("api/todo/{Id}", async (AppDbContext db, int Id) =>
 
 
 
-
-//app.MapPost("api/todo", async(AppDbContext db, Items items) =>
-//{
-//    await db.Items.AddAsync(items);
-//    await db.SaveChangesAsync();
-//    return Results.Created($"/api/todo/{items.Id}", items);
-//});
 
 
 //app.MapPost("api/todo/{listId}/items", async(AppDbContext db, Id, item) =>

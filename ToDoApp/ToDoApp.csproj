@@ -54,4 +54,16 @@
 		<PackageReference Include="SQLite" Version="3.13.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="NewList.xaml.cs">
+	    <DependentUpon>NewList.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="NewList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
