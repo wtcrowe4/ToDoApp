@@ -55,13 +55,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="NewList.xaml.cs">
-	    <DependentUpon>NewList.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="NewList.xaml">
+	  <MauiXaml Update="Views\NewList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ViewList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
