@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using ToDoApp.Models;
 
 namespace ToDoApp.DataServices
@@ -25,10 +26,36 @@ namespace ToDoApp.DataServices
         }
 
         //Lists
-        public Task<List<ToDo>> GetToDoLists()
+        public async Task<List<ToDo>> GetToDoListsAsync()
         {
-            throw new NotImplementedException();
+            List<ToDo> toDoLists = new List<ToDo>();
+            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return toDoLists;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/todo");
+                if(response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    toDoLists = JsonSerializer.Deserialize<List<ToDo>>(content, _jsonSerializerOptions);
+                }
+                else
+                {
+                    Debug.WriteLine("Http response not 2xx");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return toDoLists;
+            //throw new NotImplementedException();
         }
+        
         public Task<ToDo> GetToDoList(int Id)
         {
             throw new NotImplementedException();

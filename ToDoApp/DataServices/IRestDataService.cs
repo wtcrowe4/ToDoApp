@@ -5,7 +5,7 @@ namespace ToDoApp.DataServices
     public interface IRestDataService
     {
         //Lists Services
-        Task<List<ToDo>> GetToDoLists();
+        Task<List<ToDo>> GetToDoListsAsync();
         Task<ToDo> GetToDoList(int Id);
         Task<ToDo> AddToDoList(ToDo toDoList);
         Task<ToDo> UpdateToDoList(ToDo toDoList);
