@@ -6,15 +6,15 @@ namespace ToDoApp.DataServices
     {
         //Lists Services
         Task<List<ToDo>> GetToDoListsAsync();
-        Task<ToDo> GetToDoList(int Id);
-        Task<ToDo> AddToDoList(ToDo toDoList);
-        Task<ToDo> UpdateToDoList(ToDo toDoList);
-        Task DeleteToDoList(int id);
+        Task<ToDo> GetToDoListAsync(int Id);
+        Task<ToDo> AddToDoListAsync(ToDo toDoList);
+        Task<ToDo> UpdateToDoListAsync(in Id, ToDo toDoList);
+        Task DeleteToDoListAsync(int id);
 
         //Items Services
-        Task<List<Item>> GetItems(ToDo toDoList, int Id);
-        Task<List<Item>> AddItem(Item item, ToDo toDoList, int id);
-        Task<List<Item>> UpdateItem(Item item, ToDo toDoList, int id);
-        Task<List<Item>> DeleteItem(Item item, ToDo toDoList, int id);
+        Task<List<Item>> GetItemsAsync(ToDo toDoList, int Id);
+        Task<List<Item>> AddItemAsync(Item item, ToDo toDoList, int id);
+        Task<List<Item>> UpdateItemAsync(Item item, ToDo toDoList, int id);
+        Task<List<Item>> DeleteItemAsync(Item item, ToDo toDoList, int id);
     }
 }
