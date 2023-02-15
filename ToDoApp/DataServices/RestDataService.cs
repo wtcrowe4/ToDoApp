@@ -1,5 +1,4 @@
-﻿using AVFoundation;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -56,7 +55,6 @@ namespace ToDoApp.DataServices
                 Debug.WriteLine($"Exception: {ex.Message}");
             }
             return toDoLists;
-            //throw new NotImplementedException();
         }
         
         public async Task<ToDo> GetToDoListAsync(int id)
@@ -89,8 +87,6 @@ namespace ToDoApp.DataServices
             }
 
             return toDoList;
-        
-            //throw new NotImplementedException();
         }
 
         public async Task<ToDo> AddToDoListAsync(ToDo toDoList)
@@ -123,29 +119,78 @@ namespace ToDoApp.DataServices
 
             return toDoList;
         }
-        public Task DeleteToDoList(int id)
+        public async Task DeleteToDoListAsync(int id)
         {
-            throw new NotImplementedException();
+            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo/{id}");
+                if(response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"Deleted Todo: {id}");
+                }
+                else
+                {
+                    Debug.WriteLine("Http response not 2xx");
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return;
         }
-        public Task<ToDo> UpdateToDoList(int id, ToDo toDoList)
+        
+        public async Task UpdateToDoListAsync(int id, ToDo toDoList)
         {
-            throw new NotImplementedException();
+            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return;
+            }
+            try
+            {
+                string jsonTodo = JsonSerializer.Serialize<ToDo>(toDoList, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonTodo, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/todo/{id}", content);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"Successfully updated ToDo {id}");
+                }
+                else
+                {
+                    Debug.WriteLine("Http response not 2xx");
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return;
+            
         }
 
+        
+        
         //Items
-        public Task<List<Item>> GetItems(ToDo toDoList, int Id)
+        public async Task<List<Item>> GetItemsAsync(ToDo toDoList, int Id)
         {
             throw new NotImplementedException();
         }
-        public Task<List<Item>> AddItem(Item item, ToDo toDoList, int id)
+        public async Task<Item> AddItemAsync(Item item, ToDo toDoList, int id)
         {
             throw new NotImplementedException();
         }
-        public Task<List<Item>> DeleteItem(Item item, ToDo toDoList, int id)
+        public async Task DeleteItemAsync(Item item, ToDo toDoList, int id)
         {
             throw new NotImplementedException();
         }
-        public Task<List<Item>> UpdateItem(Item item, ToDo toDoList, int id)
+        public async Task UpdateItemAsync(Item item, ToDo toDoList, int id)
         {
             throw new NotImplementedException();
         }
