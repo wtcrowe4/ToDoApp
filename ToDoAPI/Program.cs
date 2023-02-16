@@ -64,16 +64,17 @@ app.MapGet("api/todo/{Id}", async (AppDbContext db, int Id) =>
         return Results.Ok(toDoList);
     });
 
-//POST Add Item to Specific List
-//app.MapPost("api/todo/{Id", async (AppDbContext db, int Id, Items Item) =>
-//{
-//    var toDoList = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
-//    //Call method to add item
-//    await db.ToDoLists.Items.AddAsync(Item);
-//    await db.SaveChangesAsync();
-//    return Results.Ok(toDoList);
 
-//});
+//PUT Add Item to Specific List
+app.MapPost("api/todo/{Id}/items", async (AppDbContext db, int Id, Item Item) =>
+{
+    var toDoList = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
+    //Call method to add item
+    await db.Items.AddAsync(Item);
+    await db.SaveChangesAsync();
+    return Results.Ok(toDoList);
+
+});
 
 
 
@@ -98,7 +99,7 @@ app.MapGet("api/todo/{Id}", async (AppDbContext db, int Id) =>
 //        return Results.Created($"/api/todo/{todoList.Id}/items/{item.Id}", item);
 //        }); 
 
-    
+
 
 app.Run();
 

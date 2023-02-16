@@ -178,13 +178,63 @@ namespace ToDoApp.DataServices
         
         
         //Items
-        public async Task<List<Item>> GetItemsAsync(ToDo toDoList, int Id)
+        public async Task<List<Item>> GetItemsAsync(ToDo toDoList, int id)
         {
-            throw new NotImplementedException();
+            List<Item> items = new();
+            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return items;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/todo/{id}");
+                if(response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    items = JsonSerializer.Deserialize<List<Item>>(content);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return items;
+            //Returning whole ToDo, might not need this. I can access list of items from the GET ToDo above. 
         }
+        
         public async Task<Item> AddItemAsync(Item item, ToDo toDoList, int id)
         {
-            throw new NotImplementedException();
+            //Add item to a specific ToDo list
+            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return item;
+            }
+            try
+            {
+                string jsonToDo = JsonSerializer.Serialize<ToDo>(toDoList, _jsonSerializerOptions);
+                StringContent content = new(jsonToDo, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PutAsync("{_url}/todo/{id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"Added {item} to {content}");
+                }
+                else
+                {
+                    Debug.WriteLine("Http response not 2xx");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return item;
+        }
+
         }
         public async Task DeleteItemAsync(Item item, ToDo toDoList, int id)
         {
