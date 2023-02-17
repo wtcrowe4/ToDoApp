@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -31,7 +32,7 @@ namespace ToDoApp.DataServices
         public async Task<List<ToDo>> GetToDoListsAsync()
         {
             List<ToDo> toDoLists = new();
-            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("No internet access detected.");
                 return toDoLists;
@@ -39,7 +40,7 @@ namespace ToDoApp.DataServices
             try
             {
                 HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/todo");
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     toDoLists = JsonSerializer.Deserialize<List<ToDo>>(content, _jsonSerializerOptions);
@@ -56,7 +57,7 @@ namespace ToDoApp.DataServices
             }
             return toDoLists;
         }
-        
+
         public async Task<ToDo> GetToDoListAsync(int id)
         {
             ToDo toDoList = new();
@@ -91,18 +92,18 @@ namespace ToDoApp.DataServices
 
         public async Task<ToDo> AddToDoListAsync(ToDo toDoList)
         {
-            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("No internet access detected.");
                 return null;
             }
             try
-            {  
+            {
                 string jsonToDo = JsonSerializer.Serialize<ToDo>(toDoList, _jsonSerializerOptions);
-                StringContent content= new(jsonToDo, Encoding.UTF8, "application/json");
+                StringContent content = new(jsonToDo, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _httpClient.PostAsync("{_url}/todo", content);
-                
-                if(response.IsSuccessStatusCode)
+
+                if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine($"Created Todo: {content}");
                 }
@@ -112,7 +113,7 @@ namespace ToDoApp.DataServices
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
             }
@@ -121,7 +122,7 @@ namespace ToDoApp.DataServices
         }
         public async Task DeleteToDoListAsync(int id)
         {
-            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("No internet access detected.");
                 return;
@@ -129,7 +130,7 @@ namespace ToDoApp.DataServices
             try
             {
                 HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo/{id}");
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine($"Deleted Todo: {id}");
                 }
@@ -138,16 +139,16 @@ namespace ToDoApp.DataServices
                     Debug.WriteLine("Http response not 2xx");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
             }
             return;
         }
-        
+
         public async Task UpdateToDoListAsync(int id, ToDo toDoList)
         {
-            if(Connectivity.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("No internet access detected.");
                 return;
@@ -158,7 +159,7 @@ namespace ToDoApp.DataServices
                 StringContent content = new StringContent(jsonTodo, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/todo/{id}", content);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine($"Successfully updated ToDo {id}");
                 }
@@ -167,21 +168,21 @@ namespace ToDoApp.DataServices
                     Debug.WriteLine("Http response not 2xx");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Exception: {ex.Message}");
             }
             return;
-            
+
         }
 
-        
-        
+
+
         //Items
         public async Task<List<Item>> GetItemsAsync(ToDo toDoList, int id)
         {
             List<Item> items = new();
-            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("No internet access detected.");
                 return items;
@@ -189,7 +190,7 @@ namespace ToDoApp.DataServices
             try
             {
                 HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/todo/{id}");
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     items = JsonSerializer.Deserialize<List<Item>>(content);
@@ -203,11 +204,11 @@ namespace ToDoApp.DataServices
             return items;
             //Returning whole ToDo, might not need this. I can access list of items from the GET ToDo above. 
         }
-        
+
         public async Task<Item> AddItemAsync(Item item, ToDo toDoList, int id)
         {
             //Add item to a specific ToDo list
-            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("No internet access detected.");
                 return item;
@@ -235,18 +236,65 @@ namespace ToDoApp.DataServices
             return item;
         }
 
-        }
+
         public async Task DeleteItemAsync(Item item, ToDo toDoList, int id)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return;
+            }
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo/{id}/items/{item.Id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"Deleted Item: {item}");
+                }
+                else
+                {
+                    Debug.WriteLine("Http response not 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return;
         }
         public async Task UpdateItemAsync(Item item, ToDo toDoList, int id)
         {
-            throw new NotImplementedException();
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access detected.");
+                return;
+            }
+            try
+            {
+                string jsonTodo = JsonSerializer.Serialize<Item>(item, _jsonSerializerOptions);
+                StringContent content = new StringContent(jsonTodo, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/todo/{id}/items/{item.Id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine($"Successfully updated ToDo {id} with {item}");
+                }
+                else
+                {
+                    Debug.WriteLine("Http response not 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+            return;
+
         }
-
-
     }
-
-
 }
+
+
+
+
+

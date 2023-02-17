@@ -77,28 +77,34 @@ app.MapPost("api/todo/{Id}/items", async (AppDbContext db, int Id, Item Item) =>
 });
 
 
+//DELETE Delete Item from Specific List
+app.MapDelete("api/todo/{Id}/items/{ItemId}", async (AppDbContext db, int Id, int ItemId) =>
+{
+    var toDoList = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
+    var item = await db.Items.FirstOrDefaultAsync(i => i.Id == ItemId);
+    if (item == null)
+    {
+        return Results.NotFound();
+    }
+    db.Items.Remove(item);
+    await db.SaveChangesAsync();
+    return Results.Ok(toDoList);
+});
 
-
-
-
-//app.MapPost("api/todo/{listId}/items", async(AppDbContext db, Id, item) =>
-//    {
-//        var todoList = await db.ToDoLists.FindAsync(Id);
-//    if (todoList == null)
-//        {
-//            return Results.NotFound();
-//        }
-
-//    if (todoList.Items == null)
-//        {
-//        todoList.Items = new List<Items>();
-//        }
-
-//        todoList.Items.Add(item);
-//        await db.SaveChangesAsync();
-//        return Results.Created($"/api/todo/{todoList.Id}/items/{item.Id}", item);
-//        }); 
-
+//PUT Edit Item from Specific List
+app.MapPut("api/todo/{Id}/items/{ItemId}", async (AppDbContext db, int Id, int ItemId, Item Item) =>
+{
+    var toDoList = await db.ToDoLists.FirstOrDefaultAsync(t => t.Id == Id);
+    var item = await db.Items.FirstOrDefaultAsync(i => i.Id == ItemId);
+    if (item == null)
+    {
+        return Results.NotFound();
+    }
+    item.Name = Item.Name;
+    item.IsChecked = Item.IsChecked;
+    await db.SaveChangesAsync();
+    return Results.Ok(toDoList);
+});
 
 
 app.Run();
