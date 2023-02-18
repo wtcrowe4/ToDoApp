@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-
+using ToDoApp.DataServices;
 
 namespace ToDoApp;
 
@@ -21,7 +21,7 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
+        builder.Services.AddSingleton<IRestDataService, RestDataService>();
         return builder.Build();
     }
 }
