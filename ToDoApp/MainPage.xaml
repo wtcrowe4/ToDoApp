@@ -3,54 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoApp.MainPage">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Sign In" />
+        <ToolbarItem Text="Add List" Clicked="OnAddListButtonClicked" />
+
+    </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
             <Label
                 Text="To Do List App"
                 SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
+                FontSize="56"
                 HorizontalOptions="Center" />
 
             <Label 
                 Text="Lists"
-                FontSize="20" 
+                FontSize="30" 
                 HorizontalOptions="Center" />
             
-            <!-- Filler data for lists  -->
-            <!--<CollectionView>
-                <CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type model:List}">
-                        <model:List
-                            Title="List 1"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                        <model:List
-                            Title="List 2"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                        <model:List
-                            Title="List 3"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                        <model:List
-                            Title="List 4"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                    </x:Array>
-                </CollectionView.ItemsSource>
+            
+            <CollectionView x:Name="collectionView"
+                            SelectionMode="Single"
+                            SelectionChanged="OnListSelectionClicked">
                 <CollectionView.ItemTemplate >
                     <DataTemplate>
                         <ViewCell>
@@ -71,7 +48,7 @@
                                     HeightRequest="50"
                                     WidthRequest="50" />
                                 <Label
-                                    Text="{Binding Title}"
+                                    Text="{Binding List.Title}"
                                     Grid.Column="1"
                                     Grid.Row="0"
                                     FontSize="20" />
@@ -83,7 +60,9 @@
                         </ViewCell>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>-->
+                
+                
+            </CollectionView>
 
 
 
@@ -91,7 +70,7 @@
             <!-- Button to Add New List Navigates to Form Page-->
             <Button 
                 Text="Add New List"
-                Command="{Binding AddListCommand}"
+                Command="{Binding OnAddListButtonClicked}"
                 HorizontalOptions="Center" />
 
 
@@ -99,3 +78,27 @@
     </ScrollView>
 
 </ContentPage>
+
+
+<!--<x:Array Type="{x:Type model:List}">
+                        <model:List
+                            Title="List 1"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                        <model:List
+                            Title="List 2"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                        <model:List
+                            Title="List 3"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                        <model:List
+                            Title="List 4"
+                            Description="This is a placeholder list."
+                            Icon="dotnet_bot.png"
+                            Items="[Item 1, Item 2, Item 3]" />
+                    </x:Array>-->
