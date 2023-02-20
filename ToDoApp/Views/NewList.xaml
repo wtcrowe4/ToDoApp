@@ -5,8 +5,52 @@
              Title="NewList">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Create a New List"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="32"
+            Padding="10"/>
+        
+        <!--Create new list form-->
+        <Entry 
+            Placeholder="List Name"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="16"
+            
+            />
+        <Entry
+            Placeholder="Description"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="16" />
+        
+        <Entry
+            Placeholder="Icon"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="16" />
+        
+        <!--Enter list items-->
+        <Label
+            Text="Enter List Items"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="32"
+            Padding="10" />
+
+        <Entry
+            Placeholder="Item"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="16" />
+
+        <Button
+            Command="Save_Clicked"
+            Padding="5"
+            FontSize=" 16" />
+
+
     </VerticalStackLayout>
+        
 </ContentPage>
