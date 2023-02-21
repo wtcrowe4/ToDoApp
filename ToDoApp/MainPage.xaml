@@ -30,7 +30,8 @@
                             SelectionChanged="OnListSelectionClicked">
                 <CollectionView.ItemTemplate >
                     <DataTemplate>
-                        <ViewCell>
+                        <Label Text="{Binding ToDo.Title}" />
+                        <!--<ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -57,7 +58,7 @@
                                     Grid.Column="1"
                                     Grid.Row="1" />
                             </Grid>
-                        </ViewCell>
+                        </ViewCell>-->
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 
