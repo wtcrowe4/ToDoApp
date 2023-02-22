@@ -5,8 +5,9 @@
              Title="ViewList">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            Text="{Binding Title}"
+            Padding="10"
+            FontSize="36" />
+
     </VerticalStackLayout>
 </ContentPage>
