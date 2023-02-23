@@ -31,38 +31,14 @@
                 <CollectionView.ItemTemplate >
                     <DataTemplate>
                         <Label Text="{Binding ToDo.Title}" />
-                        <!--<ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Image
-                                    Source="{Binding Icon}"
-                                    Grid.Column="0"
-                                    Grid.Row="0"
-                                    Grid.RowSpan="2"
-                                    HeightRequest="50"
-                                    WidthRequest="50" />
-                                <Label
-                                    Text="{Binding List.Title}"
-                                    Grid.Column="1"
-                                    Grid.Row="0"
-                                    FontSize="20" />
-                                <Label
-                                    Text="{Binding Description}"
-                                    Grid.Column="1"
-                                    Grid.Row="1" />
-                            </Grid>
-                        </ViewCell>-->
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
                 
-                
+            
             </CollectionView>
 
 
