@@ -57,25 +57,3 @@
 </ContentPage>
 
 
-<!--<x:Array Type="{x:Type model:List}">
-                        <model:List
-                            Title="List 1"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                        <model:List
-                            Title="List 2"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                        <model:List
-                            Title="List 3"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                        <model:List
-                            Title="List 4"
-                            Description="This is a placeholder list."
-                            Icon="dotnet_bot.png"
-                            Items="[Item 1, Item 2, Item 3]" />
-                    </x:Array>-->
