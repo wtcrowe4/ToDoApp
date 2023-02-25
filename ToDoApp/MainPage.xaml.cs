@@ -50,7 +50,7 @@ public partial class MainPage : ContentPage
 	{
         Debug.WriteLine("Delete button clicked");
         var toDo = (sender as MenuItem).CommandParameter as ToDo;
-        await _dataService.DeleteToDoListAsync(toDo);
+        await _dataService.DeleteToDoListAsync(toDo.Id);
     }
 
 

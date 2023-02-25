@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ToDoApp.DataServices;
 using ToDoApp.Models;
 
@@ -29,9 +30,23 @@ public partial class NewList : ContentPage
         BindingContext = this;
     }
 
-    private async void Save_Clicked(object sender, EventArgs e)
+    private async void OnCreateButtonClicked(object sender, EventArgs e)
     {
-        
+        if (_isNewItem)
+        {
+            Debug.WriteLine("Create new Todo clicked");
+            await _dataService.AddToDoListAsync(ToDo);
+
+        }
+        else
+        {
+            Debug.WriteLine("Todo already exists");
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { nameof(ToDo), ToDo }
+            };
+            await Shell.Current.GoToAsync(nameof(ViewList), navigationParameter);
+        }
     }
 
     async void OnCancelButtonClicked(object sender, EventArgs e)
@@ -43,4 +58,4 @@ public partial class NewList : ContentPage
     {
         if (toDo.Id == 0) return true; return false;
     }
-}
+}   

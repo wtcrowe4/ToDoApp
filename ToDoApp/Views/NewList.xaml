@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoApp.Views.NewList"
-             Title="NewList">
+             Title="Create New List">
+    
     <VerticalStackLayout>
         <Label 
             Text="Create a New List"
@@ -13,25 +14,27 @@
         
         <!--Create new list form-->
         <Entry 
+            Text="{Binding Path=ToDo.Title}"
             Placeholder="List Name"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             FontSize="16"
-            
             />
         <Entry
+            Text="{Binding Path=ToDo.Description}"
             Placeholder="Description"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             FontSize="16" />
         
         <Entry
+            Text="{Binding Path=ToDo.Icon}"
             Placeholder="Icon"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             FontSize="16" />
         
-        <!--Enter list items-->
+        <!--Enter list items will be moved to view list page-->
         <Label
             Text="Enter List Items"
             VerticalOptions="Center"
@@ -40,13 +43,14 @@
             Padding="10" />
 
         <Entry
+            Text="{Binding Path=ToDo.Items.Item}"
             Placeholder="Item"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             FontSize="16" />
 
         <Button
-            Command="Save_Clicked"
+            Command="OnOnCreateButtonClicked"
             Padding="5"
             FontSize=" 16" />
 
