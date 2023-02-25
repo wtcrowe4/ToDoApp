@@ -43,6 +43,13 @@ public partial class ViewList : ContentPage
         
     }
 
+    async void OnDeleteButtonClicked(object sender, EventArgs e)
+    {
+        Debug.WriteLine("Delete button clicked");
+        //delete item from database
+        await _dataService.DeleteItemAsync();
+    }
+
     //Get items from database
     //public async Task GetItems()
     //{

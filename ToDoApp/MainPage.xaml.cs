@@ -3,6 +3,7 @@ using System.Diagnostics;
 using ToDoApp.DataServices;
 using ToDoApp.Views;
 using ToDoApp.Models;
+using System.Net.Security;
 
 namespace ToDoApp;
 
@@ -27,16 +28,30 @@ public partial class MainPage : ContentPage
 	async void OnAddListButtonClicked(object sender, EventArgs e)
 	{
 		Debug.WriteLine("Add List button clicked");
-        await Navigation.PushAsync(new NewList());
+		var navigationParameter = new Dictionary<string, object>
+		{
+			{ nameof(ToDo), new ToDo() }
+		};
+		await Shell.Current.GoToAsync(nameof(NewList), navigationParameter);
     }
 
-	async void OnListSelectionClicked(object sender, EventArgs e)
+	async void OnListSelectionClicked(object sender, SelectionChangedEventArgs e)
 	{
 		Debug.WriteLine("List selected");
-        await Navigation.PushAsync(new ViewList());
+		var navigationParameter = new Dictionary<string, object>
+		{
+			{ nameof(ToDo), e.CurrentSelection.FirstOrDefault() as ToDo }
+		};
+		await Shell.Current.GoToAsync(nameof(ViewList), navigationParameter);
 		
 	}
 
+	async void OnDeleteButtonClicked(object sender, EventArgs e)
+	{
+        Debug.WriteLine("Delete button clicked");
+        var toDo = (sender as MenuItem).CommandParameter as ToDo;
+        await _dataService.DeleteToDoListAsync(toDo);
+    }
 
 
 
